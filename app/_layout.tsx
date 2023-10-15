@@ -56,8 +56,9 @@ function RootLayoutNav() {
           <Stack.Screen name="dragToBin" options={{ headerShown: false }} />
           <Stack.Screen name="bin" options={{ headerShown: false }} />
           <Stack.Screen name="askAI" options={{ headerShown: false }} />
+          <Stack.Screen name="askCBT" options={{ headerShown: false }} />
           <Stack.Screen name="history" options={{title:'History'}} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="modal" options={{title:'View'}} />
         </Stack>
       </ThemeProvider>
     </PaperProvider>

@@ -17,7 +17,10 @@ export default {
     tick:'#ccc',
 
     paper:'#f6eee3',
-    paperfold:'#ddd6cc'
+    paperfold:'#ddd6cc',
+
+    border:'#ccc',
+    flower:'#87A96B'
   },
   dark: {
     text: '#fff',
@@ -30,9 +33,13 @@ export default {
     bin:'white',
     unimportantText:'gray',
     deepbackground:'#000',
+    lightbackground:'#333',
     tick:'white',
 
     paper:'#312f2d',
-    paperfold:'#454342'
+    paperfold:'#454342',
+
+    border:'#555',
+    flower:'#87A96B'
   },
 };

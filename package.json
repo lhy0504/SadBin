@@ -8,8 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "draft": "netlify deploy --dir dist ",
-    "deploy": "netlify deploy --dir dist --prod"
+    "draft": "npx expo export -p web && netlify deploy --dir dist ",
+    "deploy": "npx expo export -p web && netlify deploy --dir dist --prod"
   },
   "jest": {
     "preset": "jest-expo"

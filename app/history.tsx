@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { getAllPostsFromStorage } from '../utils/AppStorage';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
@@ -26,24 +26,34 @@ export default function TabTwoScreen() {
       <FlatList
         style={styles.listStyle} keyExtractor={item => item.id}
         data={posts}
-        renderItem={({ item }) => (
-          <View style={styles.post}>
-            <Text style={styles.date}>{dayjs(item.date).format("D MMM")}</Text>
-            <Text style={styles.emotion}>{item.emotion}</Text>
-            <Text>{item.content}</Text>
-            {item.aiReplies?.map((reply) => (
-              <>
-                <Text ><Text style={styles.mode} >
-                  {findEmojiByid(reply.mode)+' '}
-                  </Text>{reply.reply}</Text>
-              </>
-            )
-            )}
-          </View>
-        )
-        } />
+        renderItem={({item})=>(<PostEntryView post={item}/>)} />
     </View>
   );
+}
+const PostEntryView=(props)=> {
+  const item = props.post
+  const router = useRouter()
+  return (
+    <TouchableOpacity onPress={() =>{ router.push({
+      pathname: "modal", params: {
+        id:props.post.id
+      }
+    })
+
+    }}>
+      <View style={styles.post}>
+        <Text style={styles.date}>{dayjs(item.date).format("D MMM")}</Text>
+        <Text style={styles.emotion}>{item.emotion}</Text>
+        <Text>{item.content}</Text>
+        {
+        item.aiReplies?.length>0 ?
+         <Text style={styles.date}>{`View ${item.aiReplies?.length} replies`} </Text>
+        :<></>
+        }
+      </View>
+    </TouchableOpacity>
+  )
+
 }
 
 const styles = StyleSheet.create({
@@ -55,23 +65,25 @@ const styles = StyleSheet.create({
   listStyle: {
     flex: 1,
     width: '100%',
-   // backgroundColor: '#ccc'
+    // backgroundColor: '#ccc'
   },
   post: {
     padding: 10,
     margin: 10,
-    borderRadius: 10
+    borderRadius: 10,
+    borderBottomColor:'#ccc',
+    borderBottomWidth:1,
   },
   mode: {
-    color:'gray',
-    fontWeight:'300',
-   
+    color: 'gray',
+    fontWeight: '300',
+
   },
-  date:{
-    color:'gray',
-    fontWeight:'300'
+  date: {
+    color: 'gray',
+    fontWeight: '300'
   },
-  emotion:{
-    fontWeight:'500'
+  emotion: {
+    fontWeight: '500'
   }
 });

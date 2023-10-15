@@ -39,5 +39,5 @@ export function findEmojiByid(id:string):string{
   if(emoji){
     return emoji.name.slice(0,2);
   }
-  return '';
+  return id;
 }

@@ -29,7 +29,6 @@ export default function TabOneScreen() {
     setModeSelected(e)
     const p = Post.parseSerializable(PostFromNav)
     setAiResponse('loading')
-    console.log(process.env.EXPO_PUBLIC_ASKAI_API_URL)
     fetch(`${process.env.EXPO_PUBLIC_ASKAI_API_URL}?emotion=${p.emotion}&mode=${e}&content=${p.content}`).then((response) => {
       return response.text();
     }).then(res => {
@@ -40,11 +39,7 @@ export default function TabOneScreen() {
   }
 
   const skip = () => {
-    router.push({
-      pathname: "bin", params: {
-        refresh: new Date().toISOString()
-      }
-    })
+    router.push({ pathname: "askCBT", params: { post: PostFromNav } })
   };
   return (
     <SafeAreaView

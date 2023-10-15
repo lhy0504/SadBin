@@ -1,31 +1,84 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../../components/EditScreenInfo';
+import { StyleSheet, useColorScheme } from 'react-native';
 import { Text, View } from '../../components/Themed';
+import { Entypo, MaterialIcons } from '@expo/vector-icons';
+
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
+import { emotions } from '../../constants/Emotions';
+import { useRouter } from 'expo-router';
+import Colors from '../../constants/Colors';
+import Memo from '../../components/Memo';
 
 export default function TabOneScreen() {
+  const [emotionSelected, setEmotionSelected] = useState([])
+  const router = useRouter();
+  const colors = Colors[useColorScheme() ?? 'light'];
+  const styles = styling(colors);
+  
+
+  function onSelectEmotion(e: Any) {
+    router.push({ pathname: "write", params: { emotions: e } });
+
+  }
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <SafeAreaView
+      style={styles.background} >
+
+      <Memo >
+        <Text style={styles.title}>{"How are you feeling today?"}</Text>
+        <View style={styles.selectContainer}>
+          <SectionedMultiSelect
+            items={emotions}
+            IconRenderer={MaterialIcons}
+            uniqueKey="id"
+            selectText="-- Choose your emotion 😊😞😰😔😨😟--"
+            showDropDowns={true}
+            onSelectedItemsChange={onSelectEmotion}
+            selectedItems={emotionSelected}
+            single
+            colors={{ selectToggleTextColor: colors.text }}
+            styles={styles.select}
+          />
+        </View>
+
+
+      </Memo>
+      <View style={styles.bottomBin}>
+        <Entypo name='trash' size={80} color={colors.unimportantText} />
+      </View>
+    </SafeAreaView>
+
+
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
+const styling = (colors) => StyleSheet.create({
+  background: {
     flex: 1,
-    alignItems: 'center',
+    backgroundColor: colors.background,
     justifyContent: 'center',
+    padding: 10
+
   },
+  
   title: {
-    fontSize: 20,
     fontWeight: 'bold',
+    fontSize: 20,
+    textAlign: 'center',
+    color: colors.text
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  selectContainer: {
+    padding: 15,
+    backgroundColor: 'trasparent',
   },
+  select: {
+    backgroundColor: 'transparent',
+  },
+  bottomBin: {
+    position: 'absolute',
+    bottom: 10,
+    alignSelf: 'center',
+  }
+
 });

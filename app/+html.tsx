@@ -30,7 +30,9 @@ export default function Root({ children }: { children: React.ReactNode }) {
         <style dangerouslySetInnerHTML={{ __html: responsiveBackground }} />
         {/* Add any additional <head> elements that you want globally available on web... */}
       </head>
-      <body>{children}</body>
+      <body>
+        <div id='centerContainer'>{children}</div>
+      </body>
     </html>
   );
 }
@@ -38,6 +40,13 @@ export default function Root({ children }: { children: React.ReactNode }) {
 const responsiveBackground = `
 body {
   background-color: #fff;
+  margin: 0px;
+  padding: 0px;
+}
+#centerContainer{
+  width:500px;
+  margin: 0 auto;
+  height:'100%';
 }
 @media (prefers-color-scheme: dark) {
   body {

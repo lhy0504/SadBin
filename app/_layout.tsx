@@ -4,6 +4,8 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import { PaperProvider } from 'react-native-paper';
+import { AppDarkTheme, AppLightTheme } from '../constants/Themes';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,11 +48,18 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <PaperProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? AppDarkTheme : AppLightTheme}>
+        <Stack >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="write" options={{ headerShown: false }} />
+          <Stack.Screen name="dragToBin" options={{ headerShown: false }} />
+          <Stack.Screen name="bin" options={{ headerShown: false }} />
+          <Stack.Screen name="askAI" options={{ headerShown: false }} />
+          <Stack.Screen name="history" options={{title:'History'}} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        </Stack>
+      </ThemeProvider>
+    </PaperProvider>
   );
 }

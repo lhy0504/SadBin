@@ -4,17 +4,29 @@ import { Entypo, MaterialIcons } from '@expo/vector-icons';
 
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { emotions } from '../../constants/Emotions';
 import { useRouter } from 'expo-router';
 import Colors from '../../constants/Colors';
 import Memo from '../../components/Memo';
+import ThemeContext from '../../constants/ThemeContext';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function TabOneScreen() {
   const [emotionSelected, setEmotionSelected] = useState([])
   const router = useRouter();
-  const colors = Colors[useColorScheme() ?? 'light'];
+  
+
+
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const colors = Colors[theme??'light'];
   const styles = styling(colors);
+
+  const handleToggleTheme = () => {
+    
+     console.log(toggleTheme)
+    toggleTheme();
+  }; 
   
 
   function onSelectEmotion(e: Any) {
@@ -24,7 +36,18 @@ export default function TabOneScreen() {
   return (
     <SafeAreaView
       style={styles.background} >
-
+      <TouchableOpacity
+        onPress={handleToggleTheme}
+        style={{
+          marginTop: 10,
+          paddingVertical: 5,
+          paddingHorizontal: 10,
+          backgroundColor: theme === 'dark' ? '#fff' : '#000',
+        }}>
+        <Text >
+          Switch to {theme === 'light' ? 'Dark' : 'Light'} Theme
+        </Text>
+      </TouchableOpacity>
       <Memo >
         <Text style={styles.title}>{"How are you feeling today?"}</Text>
         <View style={styles.selectContainer}>
@@ -61,7 +84,7 @@ const styling = (colors) => StyleSheet.create({
     padding: 10
 
   },
-  
+
   title: {
     fontWeight: 'bold',
     fontSize: 20,

@@ -3,18 +3,21 @@ import { Text, View } from '../../components/Themed';
 import { FlatList } from 'react-native-gesture-handler';
 import { getAllPostsFromStorage, getIDs } from '../../utils/AppStorage';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { findEmojiByid } from '../../constants/Modes';
 import { Entypo } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { Button } from 'react-native-paper';
+import ThemeContext from '../../constants/ThemeContext';
 
 export default function TabTwoScreen() {
+  const { theme,  } = useContext(ThemeContext);
+  const colors = Colors[theme ??'light'];
+  const styles = styling(colors);
+
   const [posts, setPosts] = useState([])
   const { refresh: refresh } = useLocalSearchParams()
-  const colors = Colors[useColorScheme() ?? 'light'];
-  const styles = styling(colors);
   const router = useRouter()
   //refresh when we come back to this page
   useEffect(() => {

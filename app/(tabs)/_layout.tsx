@@ -4,6 +4,8 @@ import { Pressable, useColorScheme } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { AntDesign, Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useContext } from 'react';
+import ThemeContext from '../../constants/ThemeContext';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -16,7 +18,9 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+
+  const { theme:colorScheme,  } = useContext(ThemeContext);
+
 
   return (
     <Tabs

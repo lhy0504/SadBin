@@ -2,13 +2,16 @@ import { Animated, Dimensions, PanResponder, StyleSheet, useColorScheme } from '
 import { Text, View } from '../components/Themed';
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Colors from '../constants/Colors';
+import ThemeContext from '../constants/ThemeContext';
 
 export default function TabOneScreen() {
-  const colors = Colors[useColorScheme() ?? 'light'];
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const colors = Colors[theme??'light'];
   const styles = styling(colors);
+
 
 
   const { post: PostFromNav, pic: PicFromNav } = useLocalSearchParams();

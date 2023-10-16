@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, useColorScheme } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { ActivityIndicator, Button } from 'react-native-paper';
@@ -12,14 +12,17 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { addPropertyToPost } from '../utils/AppStorage';
 import { modes } from '../constants/Modes';
 import Colors from '../constants/Colors';
+import ThemeContext from '../constants/ThemeContext';
 export default function TabOneScreen() {
   const { post: PostFromNav } = useLocalSearchParams();
   const router = useRouter()
   const [modeSelected, setModeSelected] = useState([])
   const [aiResponse, setAiResponse] = useState('')
   
-  const colors = Colors[useColorScheme() ?? 'light'];
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const colors = Colors[theme??'light'];
   const styles = styling(colors);
+
 
   const onSelect = (e) => {
     if (e[0] == 'skip') {

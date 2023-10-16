@@ -3,11 +3,17 @@ import { Text, View } from '../components/Themed';
 import { FlatList } from 'react-native-gesture-handler';
 import { getAllPostsFromStorage } from '../utils/AppStorage';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { findEmojiByid } from '../constants/Modes';
+import Colors from '../constants/Colors';
+import ThemeContext from '../constants/ThemeContext';
 
 export default function TabTwoScreen() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const colors = Colors[theme??'light'];
+  const styles = styling(colors);
+
   const [posts, setPosts] = useState([])
   const { refresh: refresh } = useLocalSearchParams()
 
@@ -28,12 +34,12 @@ export default function TabTwoScreen() {
         data={posts}
         renderItem={({ item }) => (
           <View style={styles.post}>
-            <Text style={styles.date}>{dayjs(item.date).format("D MMM")}</Text>
+            <Text style={styles.unimportant}>{dayjs(item.date).format("D MMM")}</Text>
             <Text style={styles.emotion}>{item.emotion}</Text>
-            <Text>{item.content}</Text>
+            <Text style={styles.content}>{item.content}</Text>
             {item.aiReplies?.map((reply) => (
               <>
-                <Text ><Text style={styles.mode} >
+                <Text ><Text style={styles.unimportant} >
                   {findEmojiByid(reply.mode)+' '}
                   </Text>{reply.reply}</Text>
               </>
@@ -46,32 +52,34 @@ export default function TabTwoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styling=(colors) => StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor:colors.background
   },
   listStyle: {
     flex: 1,
     width: '100%',
-   // backgroundColor: '#ccc'
   },
   post: {
     padding: 10,
     margin: 10,
-    borderRadius: 10
+    backgroundColor:colors.background
   },
-  mode: {
-    color:'gray',
+  unimportant: {
+    color:colors.unimportantText,
     fontWeight:'300',
-   
   },
-  date:{
-    color:'gray',
-    fontWeight:'300'
-  },
+  
   emotion:{
-    fontWeight:'500'
+    fontWeight:'500',
+    fontweight:'bold',
+    color:colors.text
+  },
+  content:{
+    fontWeight:'500',
+    color:colors.text
   }
 });

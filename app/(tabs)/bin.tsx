@@ -12,8 +12,8 @@ import { Button } from 'react-native-paper';
 import ThemeContext from '../../constants/ThemeContext';
 
 export default function TabTwoScreen() {
-  const { theme,  } = useContext(ThemeContext);
-  const colors = Colors[theme ??'light'];
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const colors = Colors[theme??'light'];
   const styles = styling(colors);
 
   const [posts, setPosts] = useState([])
@@ -39,7 +39,8 @@ export default function TabTwoScreen() {
   
       <Entypo name='trash' size={100} color={colors.unimportantText} />
       <Text style={styles.description}>{"It's ok. They're kept safe and tight in the bin. You are free from them."}</Text>
-      <Button mode="contained" onPress={skip} style={styles.btn} >Open your bin</Button>
+      <Button textColor={colors.buttonText} buttonColor={colors.buttonBackgorund}
+      mode="contained" onPress={skip} style={styles.btn}  >Open your bin</Button>
     </View>
   );
 }
@@ -49,17 +50,20 @@ const styling = (colors) => StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding:30
+    padding:30,
+    backgroundColor:colors.background
   },
   title:{
     fontSize:20,
     textAlign:'center',
     marginVertical:20,
-    fontWeight:'bold'
+    fontWeight:'bold',
+    color:colors.text
   },
   description:{
     textAlign:'center',
-    marginVertical:20
+    marginVertical:20,
+    color:colors.text
   },
   btn: {
     marginTop: 20,

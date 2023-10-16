@@ -17,13 +17,15 @@ export default {
     tick:'#ccc',
 
     paper:'#f6eee3',
-    paperfold:'#ddd6cc'
+    paperfold:'#ddd6cc',
+    buttonBackground: "rgb(120, 69, 172)",
+    buttonText:'white'
   },
   dark: {
     text: '#fff',
     background: '#222',
     tint: tintColorDark,
-    tabIconDefault: '#ccc',
+    tabIconDefault: '#7c7c7d',
     tabIconSelected: tintColorDark,
 
     textarea:'#303030',
@@ -33,6 +35,8 @@ export default {
     tick:'white',
 
     paper:'#312f2d',
-    paperfold:'#454342'
+    paperfold:'#454342',
+    buttonBackgorund:  "rgb(220, 184, 255)",
+    buttonText:'rgb(56, 30, 114)'
   },
 };

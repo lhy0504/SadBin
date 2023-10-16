@@ -1,37 +1,37 @@
-import React, {createContext, useState, useEffect} from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useColorScheme } from 'react-native';
 
 // default values are useless
-const ThemeContext = createContext({theme:'light',toggleTheme:()=>{console.log(1)}});
+const ThemeContext = createContext({ theme: 'light', toggleTheme: () => { console.log(1) } });
 
-export const ThemeProvider = ({children}) => {
-  const [theme, setTheme] = useState(useColorScheme() ?? 'dark');
+export const ThemeProvider = ({ children }) => {
+  const autoTheme = useColorScheme() ?? 'light'; // always changing
+  const [theme, setTheme] = useState(autoTheme); // light|auto|dark
 
-  useEffect(() => {
-    // Load saved theme from storage
-    const getTheme = async () => {
-      try {
-        const savedTheme = await AsyncStorage.getItem('theme');
-        if (savedTheme) {
-          setTheme(savedTheme);
-        }
-      } catch (error) {
-        console.log('Error loading theme:', error);
+  const getThemeFromStorage = async () => {
+    try {
+      const savedTheme = await AsyncStorage.getItem('theme');
+      if (savedTheme != 'auto') {
+        setTheme(savedTheme);
       }
-    };
-    getTheme();
+    } catch (error) {
+    }
+  };
+  useEffect(() => {
+    getThemeFromStorage();
   }, []);
 
-  const toggleTheme = () => {
-    let newTheme =(theme== 'light') ? 'dark' : 'light';
-    console.log(newTheme)
-    setTheme(newTheme);
+  const toggleTheme = (newTheme) => {
     AsyncStorage.setItem('theme', newTheme)
+    setTheme(newTheme)
   };
 
   return (
-    <ThemeContext.Provider value={{theme:theme, toggleTheme:toggleTheme}}>
+    <ThemeContext.Provider value={{
+      theme: theme == 'auto' ? autoTheme : theme,
+      toggleTheme: toggleTheme
+    }}>
       {children}
     </ThemeContext.Provider>
   );

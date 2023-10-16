@@ -1,11 +1,14 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { useContext, useEffect } from 'react';
 import { PaperProvider } from 'react-native-paper';
 import { AppDarkTheme, AppLightTheme } from '../constants/Themes';
+import ThemeContext, { ThemeProvider } from '../constants/ThemeContext';
+import Colors from '../constants/Colors';
+import { StatusBar } from 'react-native';
+
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -45,11 +48,26 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+ 
+  return (
+  
+      <ThemeProvider>
+        <WrappedRootLayoutNav />
+      </ThemeProvider>
+    
+  );
+}
 
+function WrappedRootLayoutNav() {
+  const { theme:colorScheme, toggleTheme } = useContext(ThemeContext);
+  const colors = Colors[colorScheme??'light'];
   return (
     <PaperProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? AppDarkTheme : AppLightTheme}>
+      <StatusBar translucent={false}
+        backgroundColor={colors.background}
+      barStyle={colorScheme=='dark'?'light-content':'dark-content'}/>
+      {/*   <ThemeProvider value={colorScheme === 'dark' ? AppDarkTheme : AppLightTheme}> */}
+     
         <Stack >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="write" options={{ headerShown: false }} />
@@ -57,10 +75,17 @@ function RootLayoutNav() {
           <Stack.Screen name="bin" options={{ headerShown: false }} />
           <Stack.Screen name="askAI" options={{ headerShown: false }} />
           <Stack.Screen name="askCBT" options={{ headerShown: false }} />
-          <Stack.Screen name="history" options={{title:'History'}} />
+          <Stack.Screen name="history" options={{
+            title: 'History',
+            headerTintColor: colors.text,
+           
+            headerStyle: {
+              backgroundColor: colors.deepbackground
+            },
+          }} />
           <Stack.Screen name="modal" options={{title:'View'}} />
         </Stack>
-      </ThemeProvider>
+     
     </PaperProvider>
   );
 }

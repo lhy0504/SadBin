@@ -4,6 +4,8 @@ import { Pressable, useColorScheme } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { AntDesign, Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useContext } from 'react';
+import ThemeContext from '../../constants/ThemeContext';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -16,13 +18,23 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+
+  const { theme:colorScheme,  } = useContext(ThemeContext);
+  const colors = Colors[colorScheme??'light'];
+
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
+        tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
+        tabBarActiveBackgroundColor:colors.background,
+      
+        tabBarStyle: {
+          backgroundColor: colors.background,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -48,7 +60,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="bin"
         options={{
-          title: 'Bin',
+          title: 'Bin',  headerShown:false,
           tabBarIcon: ({ color }) => <Entypo name='trash' size={25}  color={color} />,
         }}
       />

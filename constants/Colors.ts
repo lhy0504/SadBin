@@ -20,13 +20,15 @@ export default {
     paperfold:'#ddd6cc',
 
     border:'#ccc',
-    flower:'#87A96B'
+    flower:'#87A96B',
+    buttonBackground: "rgb(120, 69, 172)",
+    buttonText:'white'
   },
   dark: {
     text: '#fff',
     background: '#222',
     tint: tintColorDark,
-    tabIconDefault: '#ccc',
+    tabIconDefault: '#7c7c7d',
     tabIconSelected: tintColorDark,
 
     textarea:'#303030',
@@ -40,6 +42,8 @@ export default {
     paperfold:'#454342',
 
     border:'#555',
-    flower:'#87A96B'
+    flower:'#87A96B',
+    buttonBackgorund:  "rgb(220, 184, 255)",
+    buttonText:'rgb(56, 30, 114)'
   },
 };

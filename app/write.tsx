@@ -7,7 +7,7 @@ import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import dayjs from "dayjs";
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { emotions } from '../constants/Emotions';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -16,6 +16,7 @@ import { savePostToStorage } from '../utils/AppStorage';
 import ViewShot from "react-native-view-shot";
 import Colors from '../constants/Colors';
 import Memo from '../components/Memo';
+import ThemeContext from '../constants/ThemeContext';
 
 export default function TabOneScreen() {
   const { emotions: emotionsFromNav } = useLocalSearchParams();
@@ -24,8 +25,10 @@ export default function TabOneScreen() {
   const [content, setContent] = useState('')
   const ref = useRef();
 
-  const colors = Colors[useColorScheme() ?? 'light'];
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const colors = Colors[theme??'light'];
   const styles = styling(colors);
+
 
   useEffect(() => {
     if (emotionsFromNav) {

@@ -9,7 +9,9 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "draft": "npx expo export -p web && netlify deploy --dir dist ",
-    "deploy": "npx expo export -p web && netlify deploy --dir dist --prod"
+    "deploy": "npx expo export -p web && netlify deploy --dir dist --prod",
+    "draft": "npx expo export -p web   && netlify deploy --dir dist ",
+    "deploy": "npx expo export -p web   && netlify deploy --dir dist --prod"
   },
   "jest": {
     "preset": "jest-expo"
